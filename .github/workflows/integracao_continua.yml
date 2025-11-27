@@ -66,9 +66,6 @@ jobs:
             Remove-Item -Recurse -Force ".pylint.d"
           }
 
-      - name: Install stubs for MyPy
-        run: mypy . --install-types --non-interactive --config-file pyproject.toml
-
       - name: Static typing check with MyPy
         run: mypy . --config-file pyproject.toml
 
