@@ -1,5 +1,5 @@
 """
-This script is responsable for reading data from 'database.dataset.json', cleaning
+This script is responsible for reading data from 'database.dataset.json', cleaning
 the data acquired, organazing and viewing it by applying data analysis techniques to
 get insights about the car data.
 """
