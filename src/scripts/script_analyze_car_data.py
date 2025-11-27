@@ -7,7 +7,7 @@ get insights about the car data.
 from beartype import beartype
 from pandas import DataFrame, read_json
 
-from config.config import PATH_DATASET
+from configs.config import PATH_DATASET
 
 
 @beartype
@@ -27,9 +27,9 @@ def get_dataset_into_dataframe() -> DataFrame:
 
     try:
         dataset = read_json(PATH_DATASET)
-        print("Extracted dataset:")
+        print("Extracted dataset:\n")
         print(dataset.head())
-        print("\nDataset Information:")
+        print("\nDataset Information:\n")
         print(dataset.info())
 
     except OSError as e:

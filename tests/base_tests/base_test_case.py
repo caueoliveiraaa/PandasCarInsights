@@ -6,7 +6,7 @@ from unittest import TestCase
 from unittest.mock import patch
 
 import pandas as pd
-from beartype.typing import Any, Dict, List, Union
+from beartype.typing import Any, Dict, List, Optional, Union
 
 
 class BaseTestCase(TestCase):
@@ -19,8 +19,8 @@ class BaseTestCase(TestCase):
     like 'sleep' and 'print' will not affect the tests.
     """
 
+    _mocks: Dict[str, Optional[Any]] = {}
     _patchers: Dict[str, Any] = {}
-    _mocks: Dict[str, Any] = {}
     _original_stderr: Any = None
 
     def setUp(self) -> None:
@@ -31,7 +31,7 @@ class BaseTestCase(TestCase):
             self.mock_dataset: Mocks the data in the dataset.
         """
         super().setUp()
-        self.mock_dataset: List[Dict[str, Union[str, int]]] = [
+        self.mock_dataset: List[Dict[str, Union[str, int, None]]] = [
             {
                 "Brand": "Ford",
                 "Model": "Fiesta",

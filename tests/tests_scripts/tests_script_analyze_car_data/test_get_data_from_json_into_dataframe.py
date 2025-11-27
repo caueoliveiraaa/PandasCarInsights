@@ -6,14 +6,14 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import Any, List
 from pandas import DataFrame
 
-from scripts.script_analyze_car_data import get_dataset_into_dataframe
+from src.scripts.script_analyze_car_data import get_dataset_into_dataframe
 from tests.base_tests.base_test_case import BaseTestCase
 
 
 class TestGetDatasetIntoDataframe(BaseTestCase):
     """Tests for the 'get_dataset_into_dataframe' method."""
 
-    @patch("scripts.script_analyze_car_data.read_json")
+    @patch("src.scripts.script_analyze_car_data.read_json")
     def test_valid_json(self, mock_read_json: MagicMock) -> None:
         """Test that valid JSON data is correctly converted to a DataFrame."""
         mock_read_json.return_value = DataFrame(self.mock_dataset)
@@ -29,7 +29,7 @@ class TestGetDatasetIntoDataframe(BaseTestCase):
         self.assertTrue(result["MPG"][0], "35")
         self.assertTrue(result["Color"][0], "Blue")
 
-    @patch("scripts.script_analyze_car_data.read_json")
+    @patch("src.scripts.script_analyze_car_data.read_json")
     def test_raise_exceptions(self, mock_read_json: MagicMock) -> None:
         """Test the raise of all the exceptions."""
         exceptions: List[Any] = [OSError, ValueError, TypeError]

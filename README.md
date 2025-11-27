@@ -1,12 +1,10 @@
 # Pandas Car Insights
 
-Data analysis project with Pandas that cleans car data, organizes it, and produces insights like average MPG per brand.
-
 ## Summary
 
 - [Pandas Car Insights](#pandas-car-insights)
   - [Summary](#summary)
-  - [Folder and File Structure](#folder-and-file-structure)
+  - [About the project](#about-the-project)
   - [Getting Started (Quick Local Setup)](#getting-started-quick-local-setup)
     - [1 - Virtual environment](#1---virtual-environment)
     - [2 - Install dependencies](#2---install-dependencies)
@@ -16,23 +14,12 @@ Data analysis project with Pandas that cleans car data, organizes it, and produc
     - [6 - Code validation](#6---code-validation)
     - [7 - Pre-commit validation](#7---pre-commit-validation)
     - [9 - Most used commands](#9---most-used-commands)
+  - [Used technologies](#used-technologies)
+  - [Features](#features)
 
-## Folder and File Structure
+## About the project
 
-This section describes the current structure of the repository and purpose of each folder/file.
-
-- `.github/workflows` - Contains continuous integration (CI) configuration. Currently includes `integracao_continua.yml` (CI/validation pipeline).
-- `.vscode` - VS Code configuration files (for example, `settings.json` and `launch.json`). These contain editor and debug settings that work well with the project's formatters and linters.
-- `database/` - Contains sample dataset(s). Example: `data_set.json` (raw JSON dataset used in notes and scripts).
-- `scripts/` - Folder for scripts, helpers or automation; currently empty (may host ETL or analysis scripts).
-- `out/` - Output folder used to store results (e.g. CSV files produced after cleaning/analysis).
-- `tests/` - Unit/integration tests. Use `unittest` discovery to run these.
-- `main.py` - Project entrypoint (currently empty).
-- `notes.txt` - Project notes describing the intended data cleaning and analysis steps.
-- `pyproject.toml` - Configuration for development tools (Black, isort, Mypy, Coverage, Bandit and others).
-- `setup.py` - Project installation script. It reads `requirements.txt` to build `install_requires` for setuptools.
-- `requirements.txt` - NOT present in the repository yet but expected by `setup.py` and by the CI workflow; add a `requirements.txt` with runtime dependencies before using CI or building the package.
-- `.flake8`, `.pylintrc`, `.pre-commit-config.yaml` - Quality & linter configuration files.
+Data analysis project with Pandas that cleans car data, organizes it, and produces insights like average MPG per brand.
 
 ## Getting Started (Quick Local Setup)
 
@@ -263,3 +250,7 @@ Validate project code quality (with tests)
 ```powershell
 pre-commit run --all-files
 ```
+
+## Used technologies
+
+## Features

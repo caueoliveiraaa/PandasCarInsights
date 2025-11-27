@@ -3,14 +3,14 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from scripts.script_analyze_car_data import analyze_car_data
+from src.scripts.script_analyze_car_data import analyze_car_data
 from tests.base_tests.base_test_case import BaseTestCase
 
 
 class TestAnalyzeCarData(BaseTestCase):
     """Tests for the 'analyze_car_data' method."""
 
-    @patch("scripts.script_analyze_car_data.get_dataset_into_dataframe")
+    @patch("src.scripts.script_analyze_car_data.get_dataset_into_dataframe")
     def test_execution_of_get_dataset_into_dataframe(
         self, mock_get_dataset_into_dataframe: MagicMock
     ) -> None:
