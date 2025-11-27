@@ -43,6 +43,7 @@ dist/
 .ipynb_checkpoints/
 
 # Coverage
+.coverage
 nosetests.xml
 coverage.xml
 coverage.json
