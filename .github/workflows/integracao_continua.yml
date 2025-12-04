@@ -3,7 +3,7 @@ run-name: Continuous Integration - Build, Validate & Test
 
 on:
   push:
-    branches: ["*"]
+    branches: ["main"]
 
 jobs:
   build:
