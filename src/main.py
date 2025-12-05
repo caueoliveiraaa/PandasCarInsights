@@ -1,13 +1,14 @@
 """Entry point of the project."""
 
 from logging import Logger
+from os import name as os_name
 from os import system
 
 from rich.errors import ConsoleError, StyleError
 
-from src.scripts.script_analyze_car_data import CarDataAnalysis
-from src.utils.logger import BaseLogger
-from src.utils.printer import RichPrinter
+from src.services.script_analyze_car_data import CarDataAnalysis
+from src.shared.base_logger import BaseLogger
+from src.shared.rich_printer import RichPrinter
 
 
 def main() -> None:
@@ -20,7 +21,7 @@ def main() -> None:
         ConsoleError: If an error occurs in console operation.
         StyleError: If an error occurs when applying styles.
     """
-    system("cls")
+    system("cls" if os_name == "nt" else "clear")
     base_logger: BaseLogger = BaseLogger()
     main_logger: Logger = base_logger.get_logger()
 

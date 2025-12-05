@@ -1,10 +1,11 @@
-"""This script is responsible for reading data from 'database.dataset.json', cleaning
+"""This script is responsible for reading data from 'car_dataset.json', cleaning
 the data acquired, organazing and viewing it by applying data analysis techniques to
 get insights about the car data.
 """
 
 from io import StringIO
 from logging import Logger
+from os import name as os_name
 from os import system
 
 from beartype import beartype
@@ -14,11 +15,11 @@ from rich.rule import Rule
 from rich.table import Table
 
 from config.config import PATH_DATASET
-from src.utils.printer import RichPrinter
+from src.shared.rich_printer import RichPrinter
 
 
 class CarDataAnalysis:
-    """Create logic for analyzing data from 'database.dataset.json'."""
+    """Create logic for analyzing data from 'car_dataset.json'."""
 
     @beartype
     def __init__(self, logger: Logger, rich: RichPrinter) -> None:
@@ -28,13 +29,13 @@ class CarDataAnalysis:
         Attributes:
             logger: Instance of Logger for logging information.
         """
+        self._car_dataset: DataFrame = DataFrame()
         self._path_dataset: str = PATH_DATASET
-        self._dataset: DataFrame = DataFrame()
         self._logger: Logger = logger
         self._rich: RichPrinter = rich
 
     def set_dataset_into_dataframe(self) -> None:
-        """Read the data from 'database.dataset.json' and turn it into a DataFrame.
+        """Read the data from 'car_dataset.json' and turn it into a DataFrame.
 
         Raises:
             OSError: If an error occurs when handling the json file.
@@ -42,8 +43,8 @@ class CarDataAnalysis:
             TypeError: If the json contains unexpected types.
         """
         try:
-            self._dataset = read_json(self._path_dataset)
-            if not len(self._dataset):
+            self._car_dataset = read_json(self._path_dataset)
+            if not len(self._car_dataset):
                 raise ValueError("Dataset cannot be empty.")
         except OSError as e:
             self._logger.error(e)
@@ -57,27 +58,27 @@ class CarDataAnalysis:
 
     def display_dataset_content_information(self) -> None:
         """Display information about the dataset in an informative way."""
-        head_dataframe: DataFrame = self._dataset.head()
+        head_dataframe: DataFrame = self._car_dataset.head()
         self._rich.print_panel(
             "Dataset - method head() (5 first rows)", title="HEAD", color="cyan"
         )
         self._rich.display_dataframe_as_table(head_dataframe)
 
-        tail_dataframe: DataFrame = self._dataset.tail()
+        tail_dataframe: DataFrame = self._car_dataset.tail()
         self._rich.print_panel(
             "Dataset - method tail() (5 last rows)", title="TAIL", color="cyan"
         )
         self._rich.display_dataframe_as_table(tail_dataframe)
 
         datafram_information = StringIO()
-        self._dataset.info(buf=datafram_information)
+        self._car_dataset.info(buf=datafram_information)
         info_text = datafram_information.getvalue()
         self._rich.print_panel("Dataset - method info()", title="INFO", color="cyan")
         self._rich.print_panel(info_text)
 
     def show_basic_statistics(self) -> None:
         """Display basic statistical summary of the dataset."""
-        stats_dataframe: DataFrame = self._dataset.describe()
+        stats_dataframe: DataFrame = self._car_dataset.describe()
         self._rich.print_panel(
             "Basic Statistics - method describe()", title="STATS", color="green"
         )
@@ -86,16 +87,19 @@ class CarDataAnalysis:
     def show_column_names(self) -> None:
         """Display the dataset column names."""
         table: Table = self._rich.create_table("Column Name")
-        for col in self._dataset.columns:
+        for col in self._car_dataset.columns:
             table.add_row(col)
 
         self._rich.print_panel("Dataset Columns", title="COLUMNS", color="cyan")
         self._rich.print_table(table)
 
     def show_full_dataset(self) -> None:
-        """."""
-        self._rich.print_panel("Complete Dataset", title="COLUMNS", color="cyan")
-        self._rich.display_dataframe_as_table(self._dataset)
+        """Display the full dataset."""
+        self._rich.print_panel("Complete Dataset", title="DATASET", color="cyan")
+        self._rich.display_dataframe_as_table(self._car_dataset)
+
+    def display_dataset_issues(self) -> None:
+        """ """
 
     def display_menu_with_options(self) -> None:
         """Display an interactive menu for the user to choose analysis options."""
@@ -128,7 +132,7 @@ class CarDataAnalysis:
             elif choice == "4":
                 self.show_full_dataset()
             elif choice == "5":
-                system("cls")
+                system("cls" if os_name == "nt" else "clear")
             elif choice == "6":
                 self._rich.print_panel(
                     "Exiting program...", title="EXIT", color="green"
