@@ -3,10 +3,11 @@
 from functools import wraps
 from typing import Callable
 
+from beartype.typing import Any, Optional
 from rich.errors import ConsoleError, StyleError
 
 
-def error_handler(func: Callable) -> Callable:
+def error_handler(func: Callable[..., Any]) -> Callable[..., Optional[Any]]:
     """Decorator for instance methods that handles errors using self._logger and
     self._rich.
 
@@ -16,7 +17,7 @@ def error_handler(func: Callable) -> Callable:
     """
 
     @wraps(func)
-    def wrapper(self, *args, **kwargs):
+    def wrapper(self: Any, *args: Any, **kwargs: Any) -> Optional[Any]:
         """Execute the wrapped method with error handling.
 
         Args:

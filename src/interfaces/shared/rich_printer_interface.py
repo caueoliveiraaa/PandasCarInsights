@@ -149,7 +149,9 @@ class IRichPrinter(ABC):
         pass
 
     @abstractmethod
-    def print_code(self, code: str, language="python", theme="dracula") -> None:
+    def print_code(
+        self, code: str, language: str = "python", theme: str = "dracula"
+    ) -> None:
         """Print highlighted source code.
 
         Validate existance of `language` and `theme` by checking the languages and

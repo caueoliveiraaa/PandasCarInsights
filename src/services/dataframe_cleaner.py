@@ -1,7 +1,7 @@
 """ """
 
-from src.interfaces.dataframe_cleaner_interface import IDataFrameCleaner
-from src.interfaces.rich_printer_interface import IRichPrinter
+from src.interfaces.services.dataframe_cleaner_interface import IDataFrameCleaner
+from src.interfaces.shared.rich_printer_interface import IRichPrinter
 
 
 class DataFrameCleanerFactory(IDataFrameCleaner):

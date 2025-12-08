@@ -11,11 +11,11 @@ from rich.rule import Rule
 from rich.table import Table
 
 from src.domain.car_data_analysis import CarAnalysisDependencies
-from src.interfaces.dataframe_analyzer_interface import IDataFrameAnalyzer
-from src.interfaces.dataframe_cleaner_interface import IDataFrameCleaner
-from src.interfaces.dataset_loader_interface import IDataSetLoader
-from src.interfaces.logger_interface import ILogger
-from src.interfaces.rich_printer_interface import IRichPrinter
+from src.interfaces.services.dataframe_analyzer_interface import IDataFrameAnalyzer
+from src.interfaces.services.dataframe_cleaner_interface import IDataFrameCleaner
+from src.interfaces.services.dataset_loader_interface import IDataSetLoader
+from src.interfaces.shared.logger_interface import ILogger
+from src.interfaces.shared.rich_printer_interface import IRichPrinter
 from src.shared.error_handling import error_handler
 
 

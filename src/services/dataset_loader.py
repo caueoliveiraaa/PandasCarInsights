@@ -6,7 +6,7 @@ from beartype import beartype
 from pandas import DataFrame, read_json
 
 from config.config import PATH_CAR_DATASET
-from src.interfaces.dataset_loader_interface import IDataSetLoader
+from src.interfaces.services.dataset_loader_interface import IDataSetLoader
 from src.shared.error_handling import error_handler
 
 

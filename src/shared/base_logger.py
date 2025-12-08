@@ -8,7 +8,7 @@ from beartype import beartype
 from beartype.typing import Optional
 
 from config.config import PATH_LOGS
-from src.interfaces.logger_interface import ILogger
+from src.interfaces.shared.logger_interface import ILogger
 
 
 class ProjectLoggerSingleton(ILogger):

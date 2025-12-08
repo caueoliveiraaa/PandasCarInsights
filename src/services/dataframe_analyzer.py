@@ -7,8 +7,8 @@ from pandas import DataFrame
 from rich.rule import Rule
 from rich.table import Table
 
-from src.interfaces.dataframe_analyzer_interface import IDataFrameAnalyzer
-from src.interfaces.rich_printer_interface import IRichPrinter
+from src.interfaces.services.dataframe_analyzer_interface import IDataFrameAnalyzer
+from src.interfaces.shared.rich_printer_interface import IRichPrinter
 
 
 class DataFrameAnalyzerFactory(IDataFrameAnalyzer):

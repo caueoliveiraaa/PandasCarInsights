@@ -12,7 +12,7 @@ from rich.table import Table
 from rich.text import Text
 
 from config.rich_options import RICH_COLORS, RICH_LANGUAGES, RICH_STYLES, RICH_THEMES
-from src.interfaces.rich_printer_interface import IRichPrinter
+from src.interfaces.shared.rich_printer_interface import IRichPrinter
 
 
 class RichPrinterSingleton(IRichPrinter):
@@ -168,7 +168,7 @@ class RichPrinterSingleton(IRichPrinter):
 
         table: Table = Table(show_header=True, header_style=header_style)
         for col in columns:
-            table.add_column(col)
+            table.add_column(str(col))
 
         return table
 
@@ -199,7 +199,9 @@ class RichPrinterSingleton(IRichPrinter):
         self._console.print(Align.left(mark_down))
 
     @beartype
-    def print_code(self, code: str, language="python", theme="dracula") -> None:
+    def print_code(
+        self, code: str, language: str = "python", theme: str = "dracula"
+    ) -> None:
         """Print highlighted source code.
 
         Args:

@@ -3,11 +3,11 @@
 from os import name as os_name
 from os import system
 
-from rich.errors import ConsoleError, StyleError
-
 from src.services.containers import CarDataAnalysisContainer
+from src.shared.error_handling import error_handler
 
 
+@error_handler
 def main() -> None:
     """Method responsible for executing the program.
 
@@ -21,19 +21,7 @@ def main() -> None:
     system("cls" if os_name == "nt" else "clear")
     car_container = CarDataAnalysisContainer()
     car_analyzer = car_container.car_data_analysis()
-
-    try:
-        car_analyzer.display_main_menu()
-    except OSError as e:
-        car_container.logger.error(e)
-    except ValueError as e:
-        car_container.logger.error(e)
-    except TypeError as e:
-        car_container.logger.error(e)
-    except ConsoleError as e:
-        car_container.logger.error(e)
-    except StyleError as e:
-        car_container.logger.error(e)
+    car_analyzer.display_main_menu()
 
 
 if __name__ == "__main__":
