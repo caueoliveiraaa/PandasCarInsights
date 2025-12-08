@@ -23,7 +23,7 @@ def main() -> None:
     car_analyzer = car_container.car_data_analysis()
 
     try:
-        car_analyzer.analyze_car_data()
+        car_analyzer.display_main_menu()
     except OSError as e:
         car_container.logger.error(e)
     except ValueError as e:
