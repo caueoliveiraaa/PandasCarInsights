@@ -8,19 +8,22 @@ from beartype import beartype
 from beartype.typing import Optional
 
 from config.config import PATH_LOGS
+from src.interfaces.logger_interface import ILogger
 
 
-class BaseLogger:
+class ProjectLoggerSingleton(ILogger):
     """Create and configure a project-level Logger."""
 
     @beartype
-    def __init__(self, name: str = __name__, path: str = PATH_LOGS) -> None:
+    def __init__(self, name: str = "Data Analyzer", path: str = PATH_LOGS) -> None:
         """Initialize the logger helper.
 
         Args:
-            name: A name for the logging process.
-            path: Path prefix for log files. The file name will append the
+            self._name: A name for the logging process.
+            self._path: Path prefix for log files. The file name will append the
                 current date and the `.log` extension.
+            self._logger: Instance of logger for the entire project.
+            self._logger_formatter: Format of the logging.
         """
         self._name: str = name
         self._path: str = path
@@ -28,18 +31,19 @@ class BaseLogger:
         self._logger_formatter: str = (
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
         )
+
         self._setup_logger()
 
     @beartype
     def _setup_logger(self) -> None:
         """ """
         date_str: str = datetime.now().date().strftime("%Y_%m_%d")
-        file_name: str = str(__name__).replace(".", "_")
-        full_path: str = f"{self._path}{file_name}{date_str}.log"
+        full_path: str = f"{self._path}{date_str}.log"
         os.makedirs(os.path.dirname(self._path), exist_ok=True)
 
         self._logger = getLogger(self._name)
         self._set_handlers(full_path)
+
         if not self._logger:
             raise ValueError("Could not set up logger properly.")
 
@@ -55,6 +59,7 @@ class BaseLogger:
 
         if not self._logger.handlers:
             self._logger.setLevel(level=DEBUG)
+
             file_handler: FileHandler = FileHandler(full_path)
             formatter: Formatter = Formatter(self._logger_formatter)
 

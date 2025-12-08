@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import MagicMock, patch
 
-from src.services.script_analyze_car_data import analyze_car_data
+from src.services.car_data_analysis import analyze_car_data
 from tests.base_tests.base_test_case import BaseTestCase
 
 

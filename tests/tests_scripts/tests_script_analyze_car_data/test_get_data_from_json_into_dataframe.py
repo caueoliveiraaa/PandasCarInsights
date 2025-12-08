@@ -6,7 +6,7 @@ from unittest.mock import MagicMock, patch
 from beartype.typing import Any, List
 from pandas import DataFrame
 
-from src.services.script_analyze_car_data import get_dataset_into_dataframe
+from src.services.car_data_analysis import get_dataset_into_dataframe
 from tests.base_tests.base_test_case import BaseTestCase
 
 

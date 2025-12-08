@@ -1,25 +1,21 @@
 """Utilities for displaying information in different ways on the terminal."""
 
-from time import sleep
-
 from beartype import beartype
 from beartype.typing import Any, Iterable
 from pandas import DataFrame
 from rich.align import Align
 from rich.console import Console
-from rich.layout import Layout
-from rich.live import Live
 from rich.markdown import Markdown
 from rich.panel import Panel
-from rich.progress import Progress
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.text import Text
 
 from config.rich_options import RICH_COLORS, RICH_LANGUAGES, RICH_STYLES, RICH_THEMES
+from src.interfaces.rich_printer_interface import IRichPrinter
 
 
-class RichPrinter:
+class RichPrinterSingleton(IRichPrinter):
     """Create an UI with many options for displaying data."""
 
     def __init__(self) -> None:
@@ -159,7 +155,7 @@ class RichPrinter:
 
         Args:
             *columns: One or more strings representing the table's column names.
-            header_style: Style applied to the table header. Defaults to "bold magenta".
+            header_style: Style applied to the table header. Defaults to `bold magenta`.
 
         Returns:
             Table: A Rich Table instance ready to receive rows.
@@ -225,39 +221,3 @@ class RichPrinter:
 
         syntax = Syntax(code, language, theme=theme, line_numbers=True)
         self._console.print(Align.left(syntax))
-
-    @beartype
-    def live_progress(self) -> None:
-        """Create Rich progress bar instance."""
-        with Progress() as progress:
-            task = progress.add_task("Processing...", total=100)
-            for _ in range(100):
-                sleep(1)
-                progress.update(task, advance=1)
-
-    def live_dashboard(self) -> None:
-        """Display a live-updating dashboard using Rich's Live renderer."""
-        with Live(refresh_per_second=10) as live:
-            for i in range(100):
-                panel = Panel(f"Progress: {i}%", title="Dashboard")
-                live.update(panel)
-                sleep(0.05)
-
-    def build_layout(self) -> None:
-        """Build and display a predefined Rich layout structure.
-
-        The layout contains a header, body, and footer section, each rendered
-        as a panel.
-        """
-        layout: Layout = Layout()
-        layout.split(
-            Layout(name="header", size=3),
-            Layout(name="body", ratio=1),
-            Layout(name="footer", size=3),
-        )
-
-        layout["header"].update(Panel("My App", style="blue"))
-        layout["body"].update(Panel("Main content area"))
-        layout["footer"].update(Panel("Footer info"))
-
-        self._console.print(Align.left(layout))

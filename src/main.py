@@ -1,14 +1,11 @@
 """Entry point of the project."""
 
-from logging import Logger
 from os import name as os_name
 from os import system
 
 from rich.errors import ConsoleError, StyleError
 
-from src.services.script_analyze_car_data import CarDataAnalysis
-from src.shared.base_logger import BaseLogger
-from src.shared.rich_printer import RichPrinter
+from src.services.containers import CarDataAnalysisContainer
 
 
 def main() -> None:
@@ -22,24 +19,21 @@ def main() -> None:
         StyleError: If an error occurs when applying styles.
     """
     system("cls" if os_name == "nt" else "clear")
-    base_logger: BaseLogger = BaseLogger()
-    main_logger: Logger = base_logger.get_logger()
+    car_container = CarDataAnalysisContainer()
+    car_analyzer = car_container.car_data_analysis()
 
     try:
-        car_analyzer: CarDataAnalysis = CarDataAnalysis(
-            logger=base_logger.get_logger(), rich=RichPrinter()
-        )
         car_analyzer.analyze_car_data()
     except OSError as e:
-        main_logger.error(e)
+        car_container.logger.error(e)
     except ValueError as e:
-        main_logger.error(e)
+        car_container.logger.error(e)
     except TypeError as e:
-        main_logger.error(e)
+        car_container.logger.error(e)
     except ConsoleError as e:
-        main_logger.error(e)
+        car_container.logger.error(e)
     except StyleError as e:
-        main_logger.error(e)
+        car_container.logger.error(e)
 
 
 if __name__ == "__main__":
