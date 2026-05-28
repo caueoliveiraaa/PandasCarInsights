@@ -1,256 +1,241 @@
-# Pandas Car Insights
+# Arquitetura RPA Python
 
-## Summary
+Projeto de arquitetura padrão para automações em Python.
 
-- [Pandas Car Insights](#pandas-car-insights)
-  - [Summary](#summary)
-  - [About the project](#about-the-project)
-  - [Getting Started (Quick Local Setup)](#getting-started-quick-local-setup)
-    - [1 - Virtual environment](#1---virtual-environment)
-    - [2 - Install dependencies](#2---install-dependencies)
-    - [3 - Enable imports between modules](#3---enable-imports-between-modules)
-    - [4 - Run tests](#4---run-tests)
-    - [5 - Test evaluation](#5---test-evaluation)
-    - [6 - Code validation](#6---code-validation)
-    - [7 - Pre-commit validation](#7---pre-commit-validation)
-    - [9 - Most used commands](#9---most-used-commands)
-  - [Used technologies](#used-technologies)
-  - [Features](#features)
+## 📑 Sumário
 
-## About the project
+- [Arquitetura RPA Python](#arquitetura-rpa-python)
+  - [📑 Sumário](#-sumário)
+  - [🗂️ Descrição dos Diretórios da Aplicação](#️-descrição-dos-diretórios-da-aplicação)
+    - [App](#app)
+    - [App - Auto](#app---auto)
+    - [App - Core](#app---core)
+    - [App - Database](#app---database)
+    - [App - Errors](#app---errors)
+    - [App - Interfaces](#app---interfaces)
+    - [App - Middleware](#app---middleware)
+    - [App - Schemas](#app---schemas)
+    - [App - Scripts](#app---scripts)
+    - [App - Services](#app---services)
+  - [🚀 Ativação e Execução do Projeto](#-ativação-e-execução-do-projeto)
+    - [Instalações Necessárias](#instalações-necessárias)
+    - [Setup Inicial do Projeto](#setup-inicial-do-projeto)
+    - [Execução de Scripts e Ferramentas](#execução-de-scripts-e-ferramentas)
+    - [Gerenciamento de Dependências](#gerenciamento-de-dependências)
+    - [Qualidade de Código e Segurança](#qualidade-de-código-e-segurança)
+    - [Validação Completa (Pipeline de Qualidade)](#validação-completa-pipeline-de-qualidade)
+  - [🧪 Cobertura de Testes](#-cobertura-de-testes)
 
-Data analysis project with Pandas that cleans car data, organizes it, and produces insights like average MPG per brand.
 
-## Getting Started (Quick Local Setup)
+## 🗂️ Descrição dos Diretórios da Aplicação
 
-### 1 - Virtual environment
+### App
 
-Create a virtual environment to isolate project dependencies
+Pacote principal que contém o núcleo do framework e os robôs.
 
-```powershell
-python -m venv env
-```
+### App - Auto
 
-Activate the virtual environment
+Scripts de automação e suporte técnico.
 
-```powershell
-.\env\Scripts\activate
-```
+### App - Core
 
-Activate the virtual environment on Linux or macOS
+Centraliza toda a inteligência de parâmetros e variáveis de ambiente e configurações públicas.
 
-```bash
-source env/bin/activate
-```
+### App - Database
 
-Deactivate the virtual environment
+Camada de infraestrutura para interações com as bases de dados.
 
-```powershell
-deactivate
-```
+### App - Errors
 
-</br>
+Centraliza as exceções customizadas do projeto.
 
-### 2 - Install dependencies
+### App - Interfaces
 
-Install the project's runtime dependencies
+Armazena as interfaces de contrato (ABC) utilizados pelas classes dos módulos repositories e services.
 
-```powershell
-pip install -r requirements.txt
-```
+### App - Middleware
 
-Update pip if required
+Camada de interceptação que adiciona funcionalidades aos métodos.
 
-```powershell
-python -m pip install --upgrade pip
-```
+### App - Schemas
 
-Install new packages
+Armazena os modelos de dados do Pydantic e DTOs utilizadas pelo projeto.
 
-```powershell
-pip install <nome_da_biblioteca>
-```
+### App - Scripts
 
-Save the installed dependencies
+Entry points (pontos de entrada) para execução.
 
-```powershell
-pip freeze --exclude-editable > requirements.txt
-```
+### App - Services
 
-### 3 - Enable imports between modules
+Contém a lógica de negócio pura, independente de interfaces ou bancos.
 
-Make the package importable for local development
+
+## 🚀 Ativação e Execução do Projeto
+
+### Instalações Necessárias
+
+Caso ainda não possua o uv instalado na máquina:
 
 ```powershell
-pip install -e .
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### 4 - Run tests
+### Setup Inicial do Projeto
 
-Run all tests
+O comando uv sync substitui a preparação manual.</br>
+Ele cria o ambiente virtual, instala as dependências e configura o projeto em modo editável automaticamente.
 
 ```powershell
-python -m unittest discover -s tests
+# Sincroniza o ambiente com o lockfile (Cria .venv e instala tudo)
+uv sync
+
+# Garante que o projeto está em modo editável para permitir imports de 'src'
+uv pip install -e .
 ```
 
-Run a specific test
+### Execução de Scripts e Ferramentas
+
+Os comandos abaixo utilizam os entry points definidos no seu pyproject.toml.</br>
+O uv run garante que o comando seja executado dentro do contexto do ambiente virtual.
+
+- Rodar Script de Exemplo:
+  
+```cmd
+uv run exemplo-script
+```
+
+- Rodar Orquestrador Mestre:
+  
+```cmd
+uv run mestre-script
+```
+
+### Gerenciamento de Dependências
+
+Com o uv, não manipulamos arquivos .txt manualmente para instalar pacotes.
+
+- Adicionar nova biblioteca:
 
 ```powershell
-python -m unittest tests.test_arquivo.TesteClasse.test_funcao
+uv add <nome_da_biblioteca>
 ```
 
-### 5 - Test evaluation
-
-Run all tests with coverage
+- Remover biblioteca:
 
 ```powershell
-coverage run --branch -m unittest discover -s tests
+uv remove <nome_da_biblioteca>
 ```
 
-Print the result of test execution to the terminal
+- Visualizar árvore de dependências:
 
 ```powershell
-coverage report -m
+uv tree
 ```
 
-Generate results in JSON
+- Gerar/Atualizar o Lockfile:
 
 ```powershell
-coverage json
+uv lock
 ```
 
-Generate results in XML
+- Atualizar o UV:
 
 ```powershell
-coverage xml
+uv self update
 ```
 
-Generate results in HTML
+- Empacota seu código em arquivos .whl (Wheel) ou .tar.gz para distribuição oficial:
 
 ```powershell
-coverage html
+uv build
 ```
 
-Generate .cover outputs
+### Qualidade de Código e Segurança
+
+Centralizamos as validações no Ruff (que substitui Black, Isort, Flake8 e Pylint) e no MyPy.</br>
+Para validação de segurança utilizamos o Bandit.</br>
+Para idenificar código morto e bibliotecas não utilizadas, utilizamos o Vulture e o Deptry.</br>
+
+- Validações Individuais - Linting (Erros e Boas Práticas):
 
 ```powershell
-coverage annotate
+uv run ruff check .
 ```
 
-Make sure the tests achieved 100% coverage for the project
+- Formatação Automática:
 
 ```powershell
-coverage report --fail-under=100
+uv run ruff format .
 ```
 
-### 6 - Code validation
-
-Check code formatting
+- Análise de Tipagem Estática (Strict Mode):
 
 ```powershell
-black --check . --config pyproject.toml
+uv run mypy .
 ```
 
-Format the code
+- Análise de Segurança (Bandit):
 
 ```powershell
-black --config pyproject.toml .
+uv run bandit -c pyproject.toml -r src
 ```
 
-Check whether imports are organized
+- Checagem de Dependências Inúteis (Deptry):
 
 ```powershell
-isort --check-only --settings-path pyproject.toml .
+uv run deptry .
 ```
 
-Organize imports
+- Checagem de Código Morto:
 
 ```powershell
-isort --settings-path pyproject.toml .
+uv run vulture .
 ```
 
-Report potential improvements according to PEP8
+### Validação Completa (Pipeline de Qualidade)
+
+Para rodar todas as travas de segurança e estilo de uma só vez (recomendado antes de tentar realizar qualquer commit):
 
 ```powershell
-flake8 . --config=.flake8
+uv run pre-commit run --all-files
 ```
 
-Report potential improvements via Pylint
+</details>
+
+## 🧪 Cobertura de Testes
+
+Utilizamos o Pytest como framework principal de testes devido à sua flexibilidade e suporte a fixtures avançadas.</br>
+A cobertura de código é medida para garantir que a lógica do projeto esteja sempre validada.
+
+- Executar todos os testes:
 
 ```powershell
-pylint --rcfile=.pylintrc .
+uv run pytest
 ```
 
-Analyze potential typing issues
+Executar um teste específico:
 
 ```powershell
-mypy --config-file pyproject.toml .
+uv run pytest tests/unit/test_exemplo_script.py
 ```
 
-Clear MyPy cache (PowerShell)
+Para não perder tempo rodando toda a suíte após uma correção, use a flag `--lf` (last failed):
 
 ```powershell
-Remove-Item -Recurse -Force ".mypy_cache"
+uv run pytest --lf
 ```
 
-Install typing stubs for third-party libraries (used by MyPy)
+Para a execução no primeiro erro encontrado.
 
 ```powershell
-mypy --install-types --non-interactive
+uv run pytest -x
 ```
 
-Analyze potential security issues
+Gerar relatório de cobertura em `HTML`:
 
 ```powershell
-bandit -r . --configfile pyproject.toml
+# Abra o arquivo htmlcov/index.html no seu navegador após a execução
+uv run pytest --cov=src --cov-report=html
 ```
 
-### 7 - Pre-commit validation
-
-Update validation hooks
-
-```powershell
-pre-commit autoupdate
-```
-
-Clear pre-commit cache
-
-```powershell
-pre-commit clean
-```
-
-Validate the entire project before committing
-
-```powershell
-pre-commit run --all-files
-```
-
-Stop pre-commit from running before commits (optional)
-
-```powershell
-pre-commit uninstall
-```
-
-### 9 - Most used commands
-
-Run all tests with coverage and print the results, listing potential improvements
-
-```powershell
-coverage run --branch -m unittest discover -s tests ; coverage report -m
-```
-
-Clear MyPy cache (PowerShell) and analyze potential typing issues
-
-```powershell
-Remove-Item -Recurse -Force ".mypy_cache" ; mypy --config-file pyproject.toml .
-```
-
-Validate project code quality (with tests)
-
-```powershell
-pre-commit run --all-files
-```
-
-## Used technologies
-
-## Features
+---
